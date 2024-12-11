@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ONE Local Foundation - Empowering Environmental Justice Through Technology</title>
+  <!-- Responsive Meta Tag -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Meta Descriptions for SEO -->
+  <meta name="description" content="ONE Local Foundation - Funding innovative technology to empower environmental justice organizations and catalyze systemic impact">
+  <!-- Google Fonts and Material Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700|Playfair+Display&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    @media (max-width: 960px) {
+      .desktopMenu {
+        display: none;
+      }
+    }
+    @media (min-width: 960px) {
+      .mobileMenu {
+        display: none;
+      }
+    }
+
+    body {
+      overflow-x: hidden;
+      scrollbar-color: #a8d5ba #ffffff;
+      scrollbar-width: thin;
+    }
+    body::-webkit-scrollbar {
+      width: 8px;
+    }
+    body::-webkit-scrollbar-track {
+      background: #ffffff;
+    }
+    body::-webkit-scrollbar-thumb {
+      background-color: #a8d5ba;
+      border-radius: 4px;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .animatedBackground {
+      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      min-height: 100vh;
+      color: #333333;
+      position: relative;
+    }
+
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .carousel img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .carousel-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      z-index: 1;
+    }
+    .carousel-button.left {
+      left: 10px;
+    }
+    .carousel-button.right {
+      right: 10px;
+    }
+
+    .MuiButton-containedPrimary:hover {
+      background-color: #5a9e5a;
+    }
+    .MuiButton-containedSecondary:hover {
+      background-color: #e57373;
+    }
+    .MuiButton-outlinedPrimary:hover {
+      background-color: rgba(109, 76, 65, 0.1);
+    }
+
+    .testimonial {
+      text-align: center;
+      padding: 20px;
+    }
+    .testimonial-avatar {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .footer-link {
+      cursor: pointer;
+    }
+
+    .modalContent {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 600px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      outline: none;
+    }
+    .modalTitle {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    .modalBody {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      color: #555555;
+    }
+
+    .MuiCard-root:hover {
+      transform: translateY(-5px);
+      transition: transform 0.3s;
+    }
+  </style>
+</head>
+<body style="margin: 0;">
+  <div id="root"></div>
+
+  <!-- React 18 and ReactDOM 18 -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <!-- Babel for JSX transformation -->
+  <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+  <!-- Material UI v5 -->
+  <script src="https://unpkg.com/@mui/material@5.11.0/umd/material-ui.development.js" crossorigin></script>
+  <!-- Material UI Icons -->
+  <script src="https://unpkg.com/@mui/icons-material@5.11.0/umd/material-ui-icons.development.js" crossorigin></script>
+
+  <script type="text/babel">
+    const {
+      ThemeProvider,
+      createTheme,
+      CssBaseline,
+      AppBar,
+      Toolbar,
+      Typography,
+      Button,
+      IconButton,
+      Container,
+      Box,
+      Grid,
+      Card,
+      CardContent,
+      CardActions,
+      Icon,
+      Menu,
+      MenuItem,
+      Link,
+      Divider,
+      Avatar,
+      List,
+      ListItem,
+      ListItemText,
+      Accordion,
+      AccordionSummary,
+      AccordionDetails,
+      TextField,
+      useMediaQuery,
+      Modal,
+      Fade,
+      Backdrop,
+    } = MaterialUI;
+
+    // ======================= Organization and Data =======================
+
+    const organization = {
+      id: 'org1',
+      name: 'ONE Local Foundation',
+      tagline: 'Empower Your Community, Enrich Your Life.',
+      mission: 'Funding innovative technology to empower environmental justice organizations, foster sustainable community practices, and catalyze systemic environmental impact.',
+      description: 'At ONE Local Foundation, we believe that technology can drive real change in communities facing environmental injustices. By investing in tools and platforms that address environmental challenges, we help local organizations improve air and water quality, enhance food security, promote renewable energy, support circular economies, and build resilience against climate disasters.',
+      contact: {
+        email: 'onelocalfoundation@gmail.com',
+        phone: '303-916-8639',
+        address: '1724 Broadway, Boulder, CO 80302',
+      },
+      logo: 'https://via.placeholder.com/150x100?text=ONE+Local+Foundation',
+    };
+
+    const teamMembers = [
+      {
+        id: '1',
+        name: 'Cameron Ely-Murdock',
+        role: 'CEO',
+        image: 'https://i.pravatar.cc/300?img=5',
+        bio: 'An expert in environmental justice advocacy and tech-driven social change, Cameron leads the foundation with a vision to bridge technology and community empowerment.',
+      },
+      {
+        id: '2',
+        name: 'Miranda Clendening',
+        role: 'Partnership & Program Director',
+        image: 'https://i.pravatar.cc/300?img=6',
+        bio: 'Miranda specializes in building collaborations and implementing grant programs that bring critical technology solutions to frontline EJ organizations.',
+      },
+      {
+        id: '3',
+        name: 'Richard Moser',
+        role: 'Data Systems Specialist',
+        image: 'https://i.pravatar.cc/300?img=7',
+        bio: 'Richard develops and refines data tools, ensuring that EJ groups have accessible, intuitive, and impactful technology at their fingertips.',
+      },
+    ];
+
+    const initiatives = [
+      {
+        title: 'Data & Resource Mapping',
+        description: 'We fund tools that identify environmental hazards, track resource usage, and visualize community needs, enabling informed decision-making.',
+        iconName: 'map',
+        details: 'By supporting the creation of advanced mapping platforms, we help EJ organizations pinpoint pollution sources, understand local resource distribution, and plan effective interventions.'
+      },
+      {
+        title: 'Equity-Focused Dashboards',
+        description: 'We invest in platforms that provide actionable insights on disparities in air, water, and energy quality.',
+        iconName: 'analytics',
+        details: 'These dashboards help organizations and communities advocate for policy changes and equitable resource allocation, ensuring everyone has access to clean air, clean water, and sustainable energy.'
+      },
+      {
+        title: 'Sustainable Food & Energy Solutions',
+        description: 'Funding apps and tools that improve access to locally grown food, promote renewable energy, and enhance energy efficiency.',
+        iconName: 'agriculture',
+        details: 'These technologies connect communities with local producers, track food security efforts, and facilitate the adoption of clean energy solutions, reducing environmental burdens.'
+      },
+      {
+        title: 'Circular Economy & Waste Reduction',
+        description: 'Supporting platforms that foster reuse, recycling, and resource-sharing, embedding sustainability in everyday life.',
+        iconName: 'loop',
+        details: 'From composting tools to neighborhood sharing hubs, we fund innovations that reduce waste, promote zero-waste practices, and empower communities to cycle resources responsibly.'
+      },
+      {
+        title: 'Disaster Resilience',
+        description: 'Investing in data-driven tools to prepare for and respond to climate-related emergencies.',
+        iconName: 'warning',
+        details: 'These tools enable EJ organizations to develop tailored emergency plans, improve disaster response times, and build long-term resilience against climate threats.'
+      },
+    ];
+
+    const blogPosts = [
+      {
+        title: 'Building Sustainable Communities Through Tech',
+        excerpt: 'Discover how ONE Local Foundation’s grants empower EJ organizations with advanced tools to drive systemic environmental change.',
+        image: 'https://via.placeholder.com/600x400?text=Sustainable+Communities',
+        content: 'Our funded projects include data dashboards that illuminate local environmental challenges, resource mapping platforms for informed advocacy, and engagement tools that bring residents into decision-making processes. Through technology, we help communities collaborate, share resources, and identify solutions that lead to cleaner air, safer water, and a healthier environment for all.'
+      },
+      {
+        title: 'Fostering Circular Economies & Resource-Sharing',
+        excerpt: 'Learn about our support for circular economy platforms that reduce waste and promote sustainable practices.',
+        image: 'https://via.placeholder.com/600x400?text=Circular+Economy',
+        content: 'By funding the development of reuse and recycling apps, composting tools, and material exchange networks, we help communities adopt circular economy principles. This leads to less waste, more resilience, and a tangible shift towards local sustainability.'
+      },
+      {
+        title: 'Disaster Resilience: Technology for Safer Communities',
+        excerpt: 'Explore how data-driven resilience tools help EJ groups prepare for climate emergencies.',
+        image: 'https://via.placeholder.com/600x400?text=Disaster+Resilience',
+        content: 'Our grants support the creation of emergency planning dashboards and risk assessment tools. These resources enable communities to anticipate climate threats, organize proactive responses, and protect their most vulnerable members, ultimately reducing harm and strengthening community bonds.'
+      },
+    ];
+
+    const faqData = [
+      {
+        question: 'What is ONE Local Foundation?',
+        answer: 'ONE Local Foundation is a nonprofit organization that funds technology-driven solutions for environmental justice organizations. Our aim is to empower communities to address climate and environmental challenges through accessible, impactful tools.'
+      },
+      {
+        question: 'What types of projects do you fund?',
+        answer: 'We fund a range of technology projects that help EJ organizations monitor pollution, improve resource access, foster circular economies, engage communities in decision-making, and enhance disaster resilience.'
+      },
+      {
+        question: 'How can my organization apply for a grant?',
+        answer: 'Interested organizations can reach out to us through our contact form. We periodically open grant application cycles and encourage EJ-focused groups to apply and collaborate with us.'
+      },
+      {
+        question: 'How do you measure impact?',
+        answer: 'We track tool adoption, user satisfaction, community engagement, and tangible environmental improvements. Through reports and qualitative feedback, we ensure funded projects drive meaningful, long-term change.'
+      },
+      {
+        question: 'Do you provide training?',
+        answer: 'Yes, we offer workshops, training sessions, and ongoing support to ensure that EJ organizations fully leverage the technology we help fund.'
+      },
+    ];
+
+    // ======================= Theme Configuration =======================
+    const theme = createTheme({
+      palette: {
+        mode: 'light',
+        primary: {
+          main: '#6d4c41',
+        },
+        secondary: {
+          main: '#8d6e63',
+        },
+        error: {
+          main: '#e57373',
+        },
+        background: {
+          default: '#f5f5f5',
+          paper: '#ffffff',
+        },
+        text: {
+          primary: '#333333',
+          secondary: '#555555',
+        },
+      },
+      typography: {
+        fontFamily: 'Montserrat, sans-serif',
+        fontWeightBold: 700,
+        h2: {
+          fontFamily: 'Playfair Display, serif',
+          fontWeight: 700,
+          fontSize: '3rem',
+        },
+        h4: {
+          fontFamily: 'Playfair Display, serif',
+          fontWeight: 700,
+          fontSize: '2.5rem',
+        },
+        h5: {
+          fontSize: '2rem',
+        },
+        body1: {
+          fontSize: '1.2rem',
+        },
+        body2: {
+          fontSize: '1rem',
+        },
+      },
+      shape: {
+        borderRadius: 10,
+      },
+      components: {
+        MuiButton: {
+          styleOverrides: {
+            root: {
+              borderRadius: '20px',
+              textTransform: 'none',
+              fontWeight: 'bold',
+              transition: '0.3s',
+            },
+            containedPrimary: {
+              backgroundColor: '#6d4c41',
+              '&:hover': {
+                backgroundColor: '#BF820A',
+              },
+            },
+            containedSecondary: {
+              backgroundColor: '#8d6e63',
+              '&:hover': {
+                backgroundColor: '#7a5e55',
+              },
+            },
+            outlinedPrimary: {
+              borderColor: '#6d4c41',
+              color: '#6d4c41',
+              '&:hover': {
+                backgroundColor: 'rgba(109, 76, 65, 0.1)',
+              },
+            },
+          },
+        },
+        MuiAppBar: {
+          styleOverrides: {
+            root: {
+              background: 'rgba(255, 255, 255, 0.95)',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+            },
+          },
+        },
+        MuiCard: {
+          styleOverrides: {
+            root: {
+              borderRadius: '10px',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+              transition: 'transform 0.3s',
+              '&:hover': {
+                transform: 'translateY(-5px)',
+              },
+            },
+          },
+        },
+        MuiAccordion: {
+          styleOverrides: {
+            root: {
+              boxShadow: 'none',
+              '&::before': {
+                display: 'none',
+              },
+            },
+          },
+        },
+      },
+    });
+
+    // ======================= App & Navigation =======================
+    function App() {
+      const [currentPage, setCurrentPage] = React.useState('home');
+      const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+      const renderPage = () => {
+        switch (currentPage) {
+          case 'home':
+            return <LandingPage setCurrentPage={setCurrentPage} />;
+          case 'about':
+            return <AboutPage />;
+          case 'initiatives':
+            return <InitiativesPage />;
+          case 'team':
+            return <TeamPage />;
+          case 'blog':
+            return <BlogPage />;
+          case 'faq':
+            return <FAQPage />;
+          case 'contact-us':
+            return <ContactUsPage />;
+          case 'terms-of-service':
+            return <TermsOfServicePage />;
+          case 'privacy-policy':
+            return <PrivacyPolicyPage />;
+          default:
+            return <LandingPage setCurrentPage={setCurrentPage} />;
+        }
+      };
+
+      return (
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Box className="animatedBackground">
+            <NavigationBar setCurrentPage={setCurrentPage} isMobile={isMobile} />
+            <Toolbar />
+            {renderPage()}
+            <Footer setCurrentPage={setCurrentPage} />
+          </Box>
+        </ThemeProvider>
+      );
+    }
+
+    function NavigationBar({ setCurrentPage, isMobile }) {
+      const [anchorEl, setAnchorEl] = React.useState(null);
+      const [menuId, setMenuId] = React.useState(null);
+
+      const handleMenuOpen = (event, id) => {
+        setAnchorEl(event.currentTarget);
+        setMenuId(id);
+      };
+
+      const handleMenuClose = () => {
+        setAnchorEl(null);
+        setMenuId(null);
+      };
+
+      return (
+        <AppBar position="fixed" sx={{ zIndex: 1300 }}>
+          <Toolbar>
+            <img
+              src={organization.logo}
+              alt="Logo"
+              style={{ width: 40, height: 40, marginRight: '10px' }}
+            />
+            <Typography
+              variant="h4"
+              sx={{ flexGrow: 1, fontWeight: 'bold', cursor: 'pointer', color: 'black' }}
+              onClick={() => setCurrentPage('home')}
+            >
+              {organization.name}
+            </Typography>
+            {isMobile ? (
+              <>
+                <IconButton color="inherit" onClick={(e) => handleMenuOpen(e, 'mobileMenu')} aria-label="menu">
+                  <Icon>menu</Icon>
+                </IconButton>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={menuId === 'mobileMenu'}
+                  onClose={handleMenuClose}
+                  PaperProps={{ style: { zIndex: 1400 } }}
+                >
+                  <MenuItem onClick={() => { setCurrentPage('home'); handleMenuClose(); }}>Home</MenuItem>
+                  <MenuItem onClick={() => { setCurrentPage('about'); handleMenuClose(); }}>About</MenuItem>
+                  <MenuItem onClick={() => { setCurrentPage('initiatives'); handleMenuClose(); }}>Initiatives</MenuItem>
+                  <MenuItem onClick={() => { setCurrentPage('team'); handleMenuClose(); }}>Team</MenuItem>
+                  <MenuItem onClick={() => { setCurrentPage('blog'); handleMenuClose(); }}>Blog</MenuItem>
+                  <MenuItem onClick={() => { setCurrentPage('contact-us'); handleMenuClose(); }}>Contact</MenuItem>
+                </Menu>
+              </>
+            ) : (
+              <div className="desktopMenu">
+                <Button color="primary" onClick={() => setCurrentPage('home')}>Home</Button>
+                <Button color="primary" onClick={() => setCurrentPage('about')}>About</Button>
+                <Button color="primary" onClick={() => setCurrentPage('initiatives')}>Initiatives</Button>
+                <Button color="primary" onClick={() => setCurrentPage('team')}>Team</Button>
+                <Button color="primary" onClick={() => setCurrentPage('blog')}>Blog</Button>
+                <Button color="primary" onClick={() => setCurrentPage('contact-us')}>Contact</Button>
+              </div>
+            )}
+          </Toolbar>
+        </AppBar>
+      );
+    }
+
+    // ======================= Pages =======================
+    function LandingPage({ setCurrentPage }) {
+      return (
+        <Container maxWidth="lg" sx={{ mt: 4 }}>
+          <HeroSection setCurrentPage={setCurrentPage} />
+          <FeaturesSection />
+          <CommunityImpact />
+          <TestimonialsCarousel />
+          <CallToAction setCurrentPage={setCurrentPage} />
+        </Container>
+      );
+    }
+
+    function AboutPage() {
+      return (
+        <Container sx={{ py: 12, minHeight: '100vh' }}>
+          <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 8 }}>
+            About ONE Local Foundation
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 6 }}>
+            ONE Local Foundation is a nonprofit dedicated to enhancing the capacities of environmental justice organizations through technology. By providing grants and resources, we enable local groups to address systemic environmental challenges and create lasting, equitable change.
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 4 }}>
+            Our work centers on bridging the gap between grassroots advocacy and scalable technological solutions. We focus on tools that inform policy, empower community-driven solutions, and promote sustainable practices in air quality, water stewardship, food systems, renewable energy, and waste reduction.
+          </Typography>
+          <Typography variant="body1">
+            Join us in reshaping the future of our communities. Through innovation, collaboration, and a commitment to justice, we can build a healthier, more equitable world.
+          </Typography>
+        </Container>
+      );
+    }
+
+    function InitiativesPage() {
+      const [openModal, setOpenModal] = React.useState(false);
+      const [selectedInitiative, setSelectedInitiative] = React.useState(null);
+
+      const handleOpenModal = (initiative) => {
+        setSelectedInitiative(initiative);
+        setOpenModal(true);
+      };
+
+      const handleCloseModal = () => {
+        setOpenModal(false);
+        setSelectedInitiative(null);
+      };
+
+      return (
+        <Container sx={{ py: 12, minHeight: '100vh' }}>
+          <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 8 }}>
+            Our Initiatives
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 6 }}>
+            The ONE Local Foundation invests in technology that enhances community resilience, resource equity, and environmental health. Our funded projects tackle a range of issues, from environmental data analysis to sustainable resource management, helping frontline communities shape their own environmental futures.
+          </Typography>
+          <Grid container spacing={6}>
+            {initiatives.map((initiative) => (
+              <Grid item xs={12} sm={6} md={4} key={initiative.title}>
+                <Card onClick={() => handleOpenModal(initiative)} sx={{ cursor: 'pointer' }}>
+                  <CardContent>
+                    <Box display="flex" alignItems="center" justifyContent="center" gap={2}>
+                      <Icon color="primary" sx={{ fontSize: 60 }}>{initiative.iconName}</Icon>
+                    </Box>
+                    <Typography variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center', mt: 4 }}>
+                      {initiative.title}
+                    </Typography>
+                    <Typography variant="body1" sx={{ color: 'text.secondary', mt: 2, textAlign: 'center' }}>
+                      {initiative.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+
+          <Modal
+            open={openModal}
+            onClose={handleCloseModal}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{timeout:500}}
+            aria-labelledby="initiative-modal-title"
+            aria-describedby="initiative-modal-description"
+          >
+            <Fade in={openModal}>
+              <Box className="modalContent">
+                {selectedInitiative && (
+                  <>
+                    <Typography id="initiative-modal-title" variant="h5" component="h2" sx={{ mb: 2 }}>
+                      {selectedInitiative.title}
+                    </Typography>
+                    <Typography id="initiative-modal-description" sx={{ mb: 4 }}>
+                      {selectedInitiative.details}
+                    </Typography>
+                    <Button variant="contained" color="primary" onClick={handleCloseModal}>
+                      Close
+                    </Button>
+                  </>
+                )}
+              </Box>
+            </Fade>
+          </Modal>
+        </Container>
+      );
+    }
+
+    function TeamPage() {
+      const [openModal, setOpenModal] = React.useState(false);
+      const [selectedMember, setSelectedMember] = React.useState(null);
+
+      const handleOpenModal = (member) => {
+        setSelectedMember(member);
+        setOpenModal(true);
+      };
+
+      const handleCloseModal = () => {
+        setOpenModal(false);
+        setSelectedMember(null);
+      };
+
+      return (
+        <Container sx={{ py: 12, minHeight: '100vh' }}>
+          <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 8 }}>
+            Meet Our Team
+          </Typography>
+          <Grid container spacing={6}>
+            {teamMembers.map((member) => (
+              <Grid item xs={12} sm={6} md={3} key={member.id}>
+                <Card onClick={() => handleOpenModal(member)} sx={{ cursor: 'pointer' }}>
+                  <CardContent>
+                    <Avatar src={member.image} alt={member.name} sx={{ width: 120, height: 120, mx: 'auto', mb: 4 }} />
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+                      {member.name}
+                    </Typography>
+                    <Typography variant="body1" sx={{ textAlign: 'center', color: 'text.secondary', mb: 2 }}>
+                      {member.role}
+                    </Typography>
+                    <Typography variant="body2" sx={{ textAlign: 'center' }}>
+                      {member.bio}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+
+          <Modal
+            open={openModal}
+            onClose={handleCloseModal}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{timeout: 500}}
+          >
+            <Fade in={openModal}>
+              <Box className="modalContent">
+                {selectedMember && (
+                  <>
+                    <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
+                      {selectedMember.name}
+                    </Typography>
+                    <Typography sx={{ mb: 4 }}>
+                      <strong>Role:</strong> {selectedMember.role}<br /><br />
+                      {selectedMember.bio}
+                    </Typography>
+                    <Button variant="contained" color="primary" onClick={handleCloseModal}>
+                      Close
+                    </Button>
+                  </>
+                )}
+              </Box>
+            </Fade>
+          </Modal>
+        </Container>
+      );
+    }
+
+    function BlogPage() {
+      const [currentPost, setCurrentPost] = React.useState(0);
+
+      const nextPost = () => {
+        setCurrentPost((prev) => (prev + 1) % blogPosts.length);
+      };
+
+      const prevPost = () => {
+        setCurrentPost((prev) => (prev - 1 + blogPosts.length) % blogPosts.length);
+      };
+
+      React.useEffect(() => {
+        const timer = setInterval(() => {
+          nextPost();
+        }, 8000);
+        return () => clearInterval(timer);
+      }, []);
+
+      const [openModal, setOpenModal] = React.useState(false);
+      const [selectedPost, setSelectedPost] = React.useState(null);
+
+      const handleOpenModal = (post) => {
+        setSelectedPost(post);
+        setOpenModal(true);
+      };
+
+      const handleCloseModal = () => {
+        setOpenModal(false);
+        setSelectedPost(null);
+      };
+
+      return (
+        <Container sx={{ py: 12, minHeight: '100vh' }}>
+          <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 8 }}>
+            Blog
+          </Typography>
+          <Grid container spacing={6} justifyContent="center">
+            <Grid item xs={12} md={8}>
+              <Card onClick={() => handleOpenModal(blogPosts[currentPost])} sx={{ cursor: 'pointer' }}>
+                <CardContent>
+                  <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 2 }}>
+                    {blogPosts[currentPost].title}
+                  </Typography>
+                  <Typography variant="body1" sx={{ mb: 4 }}>
+                    {blogPosts[currentPost].excerpt}
+                  </Typography>
+                  <Box className="carousel" sx={{ position: 'relative' }}>
+                    <img src={blogPosts[currentPost].image} alt={blogPosts[currentPost].title} />
+                    <button className="carousel-button left" onClick={prevPost} aria-label="Previous Post">
+                      <Icon>chevron_left</Icon>
+                    </button>
+                    <button className="carousel-button right" onClick={nextPost} aria-label="Next Post">
+                      <Icon>chevron_right</Icon>
+                    </button>
+                  </Box>
+                </CardContent>
+                <CardActions>
+                  <Button variant="text" color="primary">Read More</Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          </Grid>
+
+          <Modal
+            open={openModal}
+            onClose={handleCloseModal}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{timeout: 500}}
+          >
+            <Fade in={openModal}>
+              <Box className="modalContent">
+                {selectedPost && (
+                  <>
+                    <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
+                      {selectedPost.title}
+                    </Typography>
+                    <Typography sx={{ mb: 4 }}>
+                      {selectedPost.content}
+                    </Typography>
+                    <Button variant="contained" color="primary" onClick={handleCloseModal}>
+                      Close
+                    </Button>
+                  </>
+                )}
+              </Box>
+            </Fade>
+          </Modal>
+        </Container>
+      );
+    }
+
+    function FAQPage() {
+      return (
+        <Container id="faq" sx={{ py: 12, minHeight: '100vh' }}>
+          <Typography variant="h4" component="h2" gutterBottom align="center" sx={{ fontWeight: 'bold', mb: 8 }}>
+            Frequently Asked Questions
+          </Typography>
+          <Box mt={4}>
+            {faqData.map((faq, index) => (
+              <Accordion key={index}>
+                <AccordionSummary expandIcon={<Icon>expand_more</Icon>}>
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    {faq.question}
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                    {faq.answer}
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+          </Box>
+        </Container>
+      );
+    }
+
+    function ContactUsPage() {
+      return (
+        <Container sx={{ py: 12, minHeight: '100vh' }}>
+          <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 8 }}>
+            Contact Us
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 6 }}>
+            We’d love to hear from you! Whether you have a question, want to apply for funding, or seek collaboration, please reach out.
+          </Typography>
+          <Grid container spacing={6}>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h6" sx={{ mb: 4 }}>
+                Contact Information
+              </Typography>
+              <Typography variant="body1" sx={{ mb: 2 }}>
+                <Icon sx={{ verticalAlign: 'middle', mr: 1 }}>email</Icon>
+                Email: <Link href={`mailto:${organization.contact.email}`} color="secondary">{organization.contact.email}</Link>
+              </Typography>
+              <Typography variant="body1" sx={{ mb: 2 }}>
+                <Icon sx={{ verticalAlign: 'middle', mr: 1 }}>phone</Icon>
+                Phone: <Link href={`tel:${organization.contact.phone}`} color="secondary">{organization.contact.phone}</Link>
+              </Typography>
+              <Typography variant="body1" sx={{ mb: 2 }}>
+                <Icon sx={{ verticalAlign: 'middle', mr: 1 }}>location_on</Icon>
+                Address: {organization.contact.address}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h6" sx={{ mb: 4 }}>
+                Send Us a Message
+              </Typography>
+              <TextField label="Name" variant="outlined" fullWidth sx={{ mb: 3 }} />
+              <TextField label="Email" variant="outlined" fullWidth sx={{ mb: 3 }} />
+              <TextField label="Message" variant="outlined" fullWidth multiline rows={6} sx={{ mb: 3 }} />
+              <Button variant="contained" color="primary">
+                Submit
+              </Button>
+            </Grid>
+          </Grid>
+        </Container>
+      );
+    }
+
+    function TermsOfServicePage() {
+      return (
+        <Container sx={{ py: 12, minHeight: '100vh' }}>
+          <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 8 }}>
+            Terms of Service
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 6 }}>
+            Please review these terms before using ONE Local Foundation’s website and services.
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            [Legal text outlining user rights, privacy protections, data usage, and other conditions.]
+          </Typography>
+        </Container>
+      );
+    }
+
+    function PrivacyPolicyPage() {
+      return (
+        <Container sx={{ py: 12, minHeight: '100vh' }}>
+          <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 8 }}>
+            Privacy Policy
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 6 }}>
+            Your privacy is important to us. This policy explains how we handle your personal information.
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            [Detailed information about data collection, usage, and user rights.]
+          </Typography>
+        </Container>
+      );
+    }
+
+    // ======================= Reusable Components =======================
+    function HeroSection({ setCurrentPage }) {
+      return (
+        <Box sx={{ textAlign: 'center', py: 12 }}>
+          <Typography variant="h2" sx={{ fontWeight: 'bold', mb: 4 }}>
+            {organization.tagline}
+          </Typography>
+          <Typography variant="h5" sx={{ color: 'text.secondary', mb: 6 }}>
+            {organization.mission}
+          </Typography>
+          <Button variant="contained" color="primary" size="large" onClick={() => setCurrentPage('about')}>
+            Learn More
+          </Button>
+        </Box>
+      );
+    }
+
+    function FeaturesSection() {
+      return (
+        <Box mt={12} mb={12}>
+          <Typography variant="h4" component="h2" gutterBottom align="center" sx={{ fontWeight: 'bold', mb: 8 }}>
+            Our Focus Areas
+          </Typography>
+          <Grid container spacing={6}>
+            {initiatives.slice(0,3).map((feat) => (
+              <Grid item xs={12} sm={6} md={4} key={feat.title}>
+                <Card>
+                  <CardContent>
+                    <Box display="flex" alignItems="center" justifyContent="center" gap={2}>
+                      <Icon color="primary" sx={{ fontSize: 60 }}>{feat.iconName}</Icon>
+                    </Box>
+                    <Typography variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center', mt: 4 }}>
+                      {feat.title}
+                    </Typography>
+                    <Typography variant="body1" sx={{ color: 'text.secondary', mt: 2, textAlign: 'center' }}>
+                      {feat.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      );
+    }
+
+    function CommunityImpact() {
+      const metrics = [
+        { value: '200', label: 'EJ Organizations Supported', description: 'Strengthening grassroots initiatives.' },
+        { value: '3,500', label: 'Resources Deployed', description: 'Tools & data for meaningful action.' },
+        { value: '1,200', label: 'Community Engagements', description: 'Workshops, training & user feedback sessions.' },
+        { value: '50', label: 'Technology Solutions Funded', description: 'Driving systemic environmental change.' },
+      ];
+
+      const [count, setCount] = React.useState({
+        'EJ Organizations Supported': 0,
+        'Resources Deployed': 0,
+        'Community Engagements': 0,
+        'Technology Solutions Funded': 0,
+      });
+
+      React.useEffect(() => {
+        metrics.forEach(metric => {
+          const target = parseInt(metric.value.replace(/,/g, ''));
+          let current = 0;
+          const increment = target / 200;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              current = target;
+              clearInterval(timer);
+            }
+            setCount(prev => ({
+              ...prev,
+              [metric.label]: Math.floor(current),
+            }));
+          }, 30);
+        });
+      }, []);
+
+      return (
+        <Box mt={12} mb={12}>
+          <Typography variant="h4" component="h2" gutterBottom align="center" sx={{ fontWeight: 'bold', mb: 8 }}>
+            Our Impact in Numbers
+          </Typography>
+          <Grid container spacing={6}>
+            {metrics.map((metric) => (
+              <Grid item xs={12} sm={6} md={3} key={metric.label}>
+                <Box textAlign="center">
+                  <Typography variant="h3" color="primary" sx={{ fontWeight: 'bold' }}>
+                    {count[metric.label].toLocaleString()}
+                  </Typography>
+                  <Typography variant="h5" sx={{ fontWeight: 'bold', mt: 2 }}>
+                    {metric.label}
+                  </Typography>
+                  <Typography variant="body1" sx={{ color: 'text.secondary', mt: 2 }}>
+                    {metric.description}
+                  </Typography>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      );
+    }
+
+    function TestimonialsCarousel() {
+      const testimonials = [
+        {
+          avatar: 'https://i.pravatar.cc/100?img=1',
+          name: 'Alice J.',
+          role: 'EJ Organizer',
+          quote: '“The data tools funded by ONE Local Foundation helped us pinpoint pollution sources and push for cleaner air policies.”',
+        },
+        {
+          avatar: 'https://i.pravatar.cc/100?img=2',
+          name: 'David L.',
+          role: 'Community Leader',
+          quote: '“Our neighborhood now has a platform to share resources and adopt sustainable practices. It’s a game changer.”',
+        },
+        {
+          avatar: 'https://i.pravatar.cc/100?img=3',
+          name: 'Marisol R.',
+          role: 'Nonprofit Director',
+          quote: '“Funding from ONE Local Foundation made it possible to build dashboards that guide our water conservation strategies.”',
+        },
+      ];
+
+      const [currentTestimonial, setCurrentTestimonial] = React.useState(0);
+
+      const nextTestimonial = () => {
+        setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+      };
+
+      const prevTestimonial = () => {
+        setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+      };
+
+      React.useEffect(() => {
+        const timer = setInterval(() => {
+          nextTestimonial();
+        }, 7000);
+        return () => clearInterval(timer);
+      }, []);
+
+      return (
+        <Container sx={{ py: 12 }}>
+          <Typography variant="h4" component="h2" gutterBottom align="center" sx={{ fontWeight: 'bold', mb: 8 }}>
+            What Our Partners Say
+          </Typography>
+          <Box sx={{ maxWidth: 600, margin: '0 auto', position: 'relative' }}>
+            <Box className="testimonial">
+              <Avatar src={testimonials[currentTestimonial].avatar} alt={testimonials[currentTestimonial].name} className="testimonial-avatar" />
+              <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 2 }}>
+                {testimonials[currentTestimonial].name}
+              </Typography>
+              <Typography variant="subtitle1" sx={{ color: 'text.secondary', mb: 2 }}>
+                {testimonials[currentTestimonial].role}
+              </Typography>
+              <Typography variant="body1" sx={{ fontStyle: 'italic' }}>
+                {testimonials[currentTestimonial].quote}
+              </Typography>
+            </Box>
+            <IconButton
+              className="carousel-button left"
+              onClick={prevTestimonial}
+              aria-label="Previous Testimonial"
+              sx={{ position: 'absolute', top: '50%', left: '-30px', transform: 'translateY(-50%)' }}
+            >
+              <Icon>chevron_left</Icon>
+            </IconButton>
+            <IconButton
+              className="carousel-button right"
+              onClick={nextTestimonial}
+              aria-label="Next Testimonial"
+              sx={{ position: 'absolute', top: '50%', right: '-30px', transform: 'translateY(-50%)' }}
+            >
+              <Icon>chevron_right</Icon>
+            </IconButton>
+          </Box>
+        </Container>
+      );
+    }
+
+    function CallToAction({ setCurrentPage }) {
+      return (
+        <Box mt={12} mb={12} textAlign="center">
+          <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 6 }}>
+            Join Us in Driving Change
+          </Typography>
+          <Typography variant="h5" sx={{ color: 'text.secondary', mb: 8 }}>
+            “Together, we can build sustainable futures.”
+          </Typography>
+          <Button variant="contained" color="secondary" size="large" sx={{ m: 2 }} onClick={() => setCurrentPage('contact-us')}>
+            Get Involved
+          </Button>
+          <Button variant="outlined" color="primary" size="large" sx={{ m: 2 }} onClick={() => setCurrentPage('faq')}>
+            Learn More
+          </Button>
+        </Box>
+      );
+    }
+
+    function Footer({ setCurrentPage }) {
+      return (
+        <Box py={6} sx={{ backgroundColor: '#f5f5f5' }}>
+          <Container maxWidth="lg">
+            <Grid container spacing={6}>
+              <Grid item xs={12} md={4}>
+                <Typography variant="h6" sx={{ mb: 4 }}>
+                  {organization.name}
+                </Typography>
+                <List>
+                  <ListItem disableGutters>
+                    <Link color="inherit" underline="none" onClick={() => setCurrentPage('home')} className="footer-link">
+                      <ListItemText primary="Home" />
+                    </Link>
+                  </ListItem>
+                  <ListItem disableGutters>
+                    <Link color="inherit" underline="none" onClick={() => setCurrentPage('about')} className="footer-link">
+                      <ListItemText primary="About" />
+                    </Link>
+                  </ListItem>
+                  <ListItem disableGutters>
+                    <Link color="inherit" underline="none" onClick={() => setCurrentPage('initiatives')} className="footer-link">
+                      <ListItemText primary="Initiatives" />
+                    </Link>
+                  </ListItem>
+                  <ListItem disableGutters>
+                    <Link color="inherit" underline="none" onClick={() => setCurrentPage('team')} className="footer-link">
+                      <ListItemText primary="Team" />
+                    </Link>
+                  </ListItem>
+                  <ListItem disableGutters>
+                    <Link color="inherit" underline="none" onClick={() => setCurrentPage('blog')} className="footer-link">
+                      <ListItemText primary="Blog" />
+                    </Link>
+                  </ListItem>
+                  <ListItem disableGutters>
+                    <Link color="inherit" underline="none" onClick={() => setCurrentPage('contact-us')} className="footer-link">
+                      <ListItemText primary="Contact" />
+                    </Link>
+                  </ListItem>
+                  <ListItem disableGutters>
+                    <Link color="inherit" underline="none" onClick={() => setCurrentPage('faq')} className="footer-link">
+                      <ListItemText primary="FAQ" />
+                    </Link>
+                  </ListItem>
+                </List>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Typography variant="h6" sx={{ mb: 4 }}>
+                  Follow Us
+                </Typography>
+                <Typography variant="body1" sx={{ color: 'text.secondary', mb: 4 }}>
+                  Join the conversation.
+                </Typography>
+                <Box display="flex" justifyContent="flex-start">
+                  <IconButton href="#" color="primary" aria-label="Facebook">
+                    <Icon>facebook</Icon>
+                  </IconButton>
+                  <IconButton href="#" color="primary" aria-label="Twitter">
+                    <Icon>twitter</Icon>
+                  </IconButton>
+                  <IconButton href="#" color="primary" aria-label="Instagram">
+                    <Icon>instagram</Icon>
+                  </IconButton>
+                  <IconButton href="#" color="primary" aria-label="LinkedIn">
+                    <Icon>linkedin</Icon>
+                  </IconButton>
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Typography variant="h6" sx={{ mb: 4 }}>
+                  Newsletter Signup
+                </Typography>
+                <Typography variant="body1" sx={{ color: 'text.secondary', mb: 4 }}>
+                  Get the Latest Updates & Stories
+                </Typography>
+                <TextField
+                  label="Email"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  InputLabelProps={{ style: { color: '#6d4c41' } }}
+                  InputProps={{ style: { color: '#333333', backgroundColor: '#ffffff' } }}
+                />
+                <Button variant="contained" color="primary" fullWidth>
+                  Subscribe
+                </Button>
+              </Grid>
+            </Grid>
+            <Divider sx={{ my: 6, backgroundColor: '#e0e0e0' }} />
+            <Box textAlign="center">
+              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                © 2024 {organization.name}. All rights reserved. |{' '}
+                <Link color="inherit" onClick={() => setCurrentPage('terms-of-service')} className="footer-link">
+                  Terms of Service
+                </Link>{' '}
+                |{' '}
+                <Link color="inherit" onClick={() => setCurrentPage('privacy-policy')} className="footer-link">
+                  Privacy Policy
+                </Link>
+              </Typography>
+            </Box>
+          </Container>
+        </Box>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
